@@ -7,6 +7,7 @@ class RecipeRecommendationApp:
         from gui.recipe import RecipeGui
         from gui.ingredients import IngredientsGui
         from gui.main_screen import MainMenuScreen
+        from gui.results_screen import ResultsScreen
 
         self.root = root
         self.init_app()
@@ -23,7 +24,7 @@ class RecipeRecommendationApp:
 
         # Initialize frames dict
         self.frames = {}
-        for F in (MainMenuScreen, RecipeGui, IngredientsGui):
+        for F in (MainMenuScreen, RecipeGui, IngredientsGui, ResultsScreen):
             frame = F(parent=self.container, controller=self)
             self.frames[F] = frame
             frame.grid(row=0, column=0, sticky="nsew")

@@ -1,11 +1,51 @@
 [
     {
+        "label": "InferenceEngine",
+        "importPath": "data.inference_engine",
+        "description": "data.inference_engine",
+        "isExtraImport": true,
+        "detail": "data.inference_engine",
+        "documentation": {}
+    },
+    {
         "label": "tkinter",
         "kind": 6,
         "isExtraImport": true,
         "importPath": "tkinter",
         "description": "tkinter",
         "detail": "tkinter",
+        "documentation": {}
+    },
+    {
+        "label": "ttk",
+        "importPath": "tkinter",
+        "description": "tkinter",
+        "isExtraImport": true,
+        "detail": "tkinter",
+        "documentation": {}
+    },
+    {
+        "label": "ttk",
+        "importPath": "tkinter",
+        "description": "tkinter",
+        "isExtraImport": true,
+        "detail": "tkinter",
+        "documentation": {}
+    },
+    {
+        "label": "MainMenuScreen",
+        "importPath": "gui.main_screen",
+        "description": "gui.main_screen",
+        "isExtraImport": true,
+        "detail": "gui.main_screen",
+        "documentation": {}
+    },
+    {
+        "label": "List",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
         "documentation": {}
     },
     {
@@ -35,12 +75,57 @@
         "documentation": {}
     },
     {
+        "label": "InferenceEngine",
+        "kind": 6,
+        "importPath": "data.inference_engine",
+        "description": "data.inference_engine",
+        "peekOfCode": "class InferenceEngine:\n    def __init__(self, recipes, rules):\n        self.recipes = recipes\n        self.rules = rules\n    def infer(self, preferences):\n        scored_recipes = []\n        for recipe in self.recipes:\n            # Strict cuisine filter first\n            if \"cuisine\" in preferences:\n                if recipe[\"cuisine\"] != preferences[\"cuisine\"]:",
+        "detail": "data.inference_engine",
+        "documentation": {}
+    },
+    {
+        "label": "RecipeRecommender",
+        "kind": 6,
+        "importPath": "data.recommender_system",
+        "description": "data.recommender_system",
+        "peekOfCode": "class RecipeRecommender:\n    def __init__(self, recipes, rules):\n        self.inference_engine = InferenceEngine(recipes, rules)\n    def recommend(self, preferences):\n        results = self.inference_engine.infer(preferences)\n        return [\n            {\n                \"recipe\": result[\"recipe\"],\n                \"match_percent\": result[\"score\"] * 20,\n                \"reasons\": result[\"reasons\"],",
+        "detail": "data.recommender_system",
+        "documentation": {}
+    },
+    {
+        "label": "IngredientsGui",
+        "kind": 6,
+        "importPath": "gui.ingredients",
+        "description": "gui.ingredients",
+        "peekOfCode": "class IngredientsGui(tk.Frame):\n    def __init__(self, parent: \"tk.Frame\", controller):\n        super().__init__(parent)\n        self.controller = controller\n        self.configure(bg=\"#f5f5f5\")\n        label = tk.Label(\n            self,\n            text=\"This is Screen Two\",\n            font=(\"Segoe UI\", 18, \"bold\"),\n            bg=\"#f5f5f5\",",
+        "detail": "gui.ingredients",
+        "documentation": {}
+    },
+    {
         "label": "MainMenuScreen",
         "kind": 6,
         "importPath": "gui.main_screen",
         "description": "gui.main_screen",
         "peekOfCode": "class MainMenuScreen(tk.Frame):\n    def __init__(self, parent: \"tk.Frame\", controller):\n        super().__init__(parent)\n        self.controller = controller\n        self.configure(bg=\"#f5f5f5\")\n        self.render_link_btns( controller)\n    def render_link_btns(self, controller):\n        from gui.recipe import RecipeGui\n        from gui.ingredients import IngredientsGui\n        # Centered frame for buttons",
         "detail": "gui.main_screen",
+        "documentation": {}
+    },
+    {
+        "label": "RecipeGui",
+        "kind": 6,
+        "importPath": "gui.recipe",
+        "description": "gui.recipe",
+        "peekOfCode": "class RecipeGui(tk.Frame):\n    def __init__(self, parent: \"tk.Frame\", controller):\n        from data.recommender_system import RecipeRecommender\n        from data.constants import RECIPES, RULES\n        super().__init__(parent)\n        self.controller = controller\n        self.configure(bg=\"#f5f5f5\")\n        self.recommender = RecipeRecommender(RECIPES, RULES)\n        # Title label\n        label = tk.Label(",
+        "detail": "gui.recipe",
+        "documentation": {}
+    },
+    {
+        "label": "ResultsScreen",
+        "kind": 6,
+        "importPath": "gui.results_screen",
+        "description": "gui.results_screen",
+        "peekOfCode": "class ResultsScreen(tk.Frame):\n    def __init__(self, parent: \"tk.Frame\", controller, recipes: List[dict] = []):\n        super().__init__(parent)\n        self.controller = controller\n        self.recipes = recipes\n        self.configure(bg=\"#f5f5f5\")\n        # Create a scrollable frame\n        self.scrollable_frame = ttk.Frame(self)\n        self.scrollable_frame.pack(fill=tk.BOTH, expand=True)\n        self.canvas = tk.Canvas(self.scrollable_frame)",
+        "detail": "gui.results_screen",
         "documentation": {}
     }
 ]

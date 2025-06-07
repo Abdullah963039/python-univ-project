@@ -1,15 +1,16 @@
 import tkinter as tk
 from tkinter import ttk
-from typing import List
-
-from gui.main_screen import MainMenuScreen
 
 
 class RecipeGui(tk.Frame):
     def __init__(self, parent: "tk.Frame", controller):
+        from data.recommender_system import RecipeRecommender
+        from data.constants import RECIPES, RULES
+
         super().__init__(parent)
         self.controller = controller
         self.configure(bg="#f5f5f5")
+        self.recommender = RecipeRecommender(RECIPES, RULES)
 
         # Title label
         label = tk.Label(
@@ -37,66 +38,6 @@ class RecipeGui(tk.Frame):
         self.min_protein_entry = self.__create_input("Minimum protein content (grams):")
         # Maximum calories
         self.max_calories_entry = self.__create_input("Maximum calories:")
-
-    def submit_form(self):
-        """Handle form submission with validation"""
-        if not self.__validate_form():
-            return  # Don't proceed if validation fails
-
-        # Retrieve valid user input
-        selected_cuisine = self.selected_cuisine.get()
-        max_cooking_time = self.cook_time_entry.get()
-        dietary_preferences = self.selected_diet.get()
-        min_protein_content = self.min_protein_entry.get()
-        max_calories = self.max_calories_entry.get()
-
-        # Process the valid input data
-        print("Preferred Cuisine:", selected_cuisine)
-        print("Maximum Cooking Time:", max_cooking_time)
-        print("Dietary Preferences:", dietary_preferences)
-        print("Minimum Protein Content:", min_protein_content)
-        print("Maximum Calories:", max_calories)
-
-        # Show success message
-        self.__show_success_message()
-
-    def __show_success_message(self):
-        """Display success message when form is submitted successfully"""
-        success_window = tk.Toplevel(self)
-        success_window.title("Success")
-        success_window.geometry("300x150")
-        success_window.resizable(False, False)
-        success_window.configure(bg="#f5f5f5")
-
-        # Success icon
-        success_icon = tk.Label(
-            success_window, text="✓", font=("Segoe UI", 24), bg="#f5f5f5", fg="#2ecc71"
-        )
-        success_icon.pack(pady=(10, 5))
-
-        # Message
-        message = tk.Label(
-            success_window,
-            text="Form submitted successfully!",
-            font=("Segoe UI", 12),
-            bg="#f5f5f5",
-            fg="#333333",
-        )
-        message.pack(pady=5)
-
-        # OK button
-        ok_button = tk.Button(
-            success_window,
-            text="OK",
-            command=success_window.destroy,
-            bg="#2ecc71",
-            fg="white",
-            activebackground="#27ae60",
-            activeforeground="white",
-            relief=tk.FLAT,
-            padx=15,
-        )
-        ok_button.pack(pady=10)
 
     def __prefered_cuisines_ui(self):
         cuisines = [
@@ -200,8 +141,8 @@ class RecipeGui(tk.Frame):
         max_calories = self.max_calories_entry.get()
         try:
             calories = int(max_calories)
-            if calories <= 0 or calories >= 2000:
-                warnings.append("Calories must be between 1 and 1999")
+            if calories <= 1 or calories > 2000:
+                warnings.append("Calories must be between 1 and 2000")
         except ValueError:
             warnings.append("Please enter a valid number for maximum calories")
 
@@ -271,6 +212,8 @@ class RecipeGui(tk.Frame):
         return entry
 
     def __render_action_btns(self):
+        from gui.main_screen import MainMenuScreen
+
         button_frame = tk.Frame(self, bg="#f5f5f5")
         button_frame.pack(pady=(20, 30))
 
@@ -307,3 +250,23 @@ class RecipeGui(tk.Frame):
             cursor="hand2",
         )
         submit_button.pack(side=tk.LEFT, padx=(20, 0))  # Right margin between buttons
+
+    def submit_form(self):
+        """Handle form submission with validation"""
+
+        if not self.__validate_form():
+            return  # Don't proceed if validation fails
+
+        # Retrieve valid user input
+        preferences = {
+            "cuisine": self.selected_cuisine.get().lower().strip(),
+            "diet_tag": self.selected_diet.get().lower().strip(),
+            "max_cook_time": int(self.cook_time_entry.get()),
+            "min_protein": int(self.min_protein_entry.get()),
+            "max_calories": int(self.max_calories_entry.get()),
+        }
+
+        recommender = self.recommender
+        results = recommender.recommend(preferences)
+
+        print(f"{results = }")
