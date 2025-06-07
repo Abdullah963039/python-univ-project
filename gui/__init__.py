@@ -30,9 +30,6 @@ class RecipeRecommendationApp:
 
         self.show_frame(MainMenuScreen)
 
-        # Exit button at right-bottom corner
-        self.exit_btn()
-
     def show_frame(self, screen_class: "tk.Frame"):
         frame: "tk.Frame" = self.frames[screen_class]
         frame.tkraise()
@@ -48,28 +45,10 @@ class RecipeRecommendationApp:
         )
         welcome_label.pack()
 
-    def exit_btn(self):
-        exit_button = tk.Button(
-            self.root,
-            text="Exit",
-            font=("Segoe UI", 12),
-            command=self.root.destroy,
-            bg="#ec3029",
-            fg="white",
-            activebackground="#de423d",
-            activeforeground='white',
-            padx=15,
-            pady=5,
-            relief=tk.FLAT,
-            borderwidth=0,
-            cursor="hand2",
-        )
-        exit_button.pack(side=tk.BOTTOM, anchor="e", padx=20, pady=20)
-
     def init_app(self):
         self.root.title("Recipe Recommendation")
-        self.root.geometry("800x500")
-        self.root.minsize(800, 500)
+        self.root.geometry("800x700")
+        self.root.minsize(800, 700)
         self.root.configure(bg="#f5f5f5")
 
         # Set a modern font for the app

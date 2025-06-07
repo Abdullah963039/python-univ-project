@@ -6,18 +6,20 @@ class MainMenuScreen(tk.Frame):
         super().__init__(parent)
         self.controller = controller
         self.configure(bg="#f5f5f5")
+        
+
+        self.render_link_btns( controller)
+
+    def render_link_btns(self, controller):
+        from gui.recipe import RecipeGui
+        from gui.ingredients import IngredientsGui
+        
         # Centered frame for buttons
         button_frame = tk.Frame(self, bg="#f5f5f5")
         button_frame.place(relx=0.5, rely=0.5, anchor="center")
 
-        self.render_link_btns(button_frame, controller)
-
-    def render_link_btns(self, frame: "tk.Frame", controller):
-        from gui.recipe import RecipeGui
-        from gui.ingredients import IngredientsGui
-
         recipe_btn = tk.Button(
-            frame,
+            button_frame,
             text="Search by Recipe",
             font=("Segoe UI", 14),
             command=lambda: controller.show_frame(RecipeGui),
@@ -34,7 +36,7 @@ class MainMenuScreen(tk.Frame):
         recipe_btn.grid(row=0, column=0)
 
         ingredients_btn = tk.Button(
-            frame,
+            button_frame,
             text="Search by Ingredients",
             font=("Segoe UI", 14),
             command=lambda: controller.show_frame(IngredientsGui),

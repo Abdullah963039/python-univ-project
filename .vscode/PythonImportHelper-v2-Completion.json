@@ -1,0 +1,46 @@
+[
+    {
+        "label": "tkinter",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "tkinter",
+        "description": "tkinter",
+        "detail": "tkinter",
+        "documentation": {}
+    },
+    {
+        "label": "RecipeRecommendationApp",
+        "importPath": "gui",
+        "description": "gui",
+        "isExtraImport": true,
+        "detail": "gui",
+        "documentation": {}
+    },
+    {
+        "label": "RECIPES",
+        "kind": 5,
+        "importPath": "data.constants",
+        "description": "data.constants",
+        "peekOfCode": "RECIPES = [\n    {\n        \"name\": \"Quiche Lorraine\",\n        \"ingredients\": [\"pie crust\", \"eggs\", \"bacon\", \"heavy cream\", \"gruyere cheese\"],\n        \"cuisine\": \"french\",\n        \"diet_tags\": [\"high-protein\", \"non-vegan\"],\n        \"cook_time\": 50,\n        \"nutrition\": {\"calories\": 680, \"protein\": 25},\n    },\n    {",
+        "detail": "data.constants",
+        "documentation": {}
+    },
+    {
+        "label": "RULES",
+        "kind": 5,
+        "importPath": "data.constants",
+        "description": "data.constants",
+        "peekOfCode": "RULES = [\n    {\n        \"name\": \"ingredient_overlap_rule\",\n        \"condition\": lambda pref, recipe: \"available_ingredients\" in pref,\n        \"action\": lambda pref, recipe: {  # Now takes both pref and recipe\n            \"reason\": \"Uses available ingredients\",\n            \"score_boost\": len(\n                [\n                    ing\n                    for ing in recipe[\"ingredients\"]",
+        "detail": "data.constants",
+        "documentation": {}
+    },
+    {
+        "label": "MainMenuScreen",
+        "kind": 6,
+        "importPath": "gui.main_screen",
+        "description": "gui.main_screen",
+        "peekOfCode": "class MainMenuScreen(tk.Frame):\n    def __init__(self, parent: \"tk.Frame\", controller):\n        super().__init__(parent)\n        self.controller = controller\n        self.configure(bg=\"#f5f5f5\")\n        self.render_link_btns( controller)\n    def render_link_btns(self, controller):\n        from gui.recipe import RecipeGui\n        from gui.ingredients import IngredientsGui\n        # Centered frame for buttons",
+        "detail": "gui.main_screen",
+        "documentation": {}
+    }
+]
