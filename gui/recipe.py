@@ -40,18 +40,7 @@ class RecipeGui(tk.Frame):
         self.max_calories_entry = self.__create_input("Maximum calories:")
 
     def __prefered_cuisines_ui(self):
-        cuisines = [
-            "American",
-            "Italian",
-            "French",
-            "Arabian",
-            "Chinese",
-            "Japanese",
-            "Mexican",
-            "Indian",
-            "Thai",
-            "Mediterranean",
-        ]
+        from data.constants import CUISINES
 
         tk.Label(
             self, text="Preferred Cuisine:", bg="#f5f5f5", font=("Segoe UI", 12)
@@ -65,7 +54,7 @@ class RecipeGui(tk.Frame):
         self.cuisine_combobox = ttk.Combobox(
             self,
             textvariable=self.selected_cuisine,
-            values=cuisines,
+            values=CUISINES,
             state="readonly",  # makes it non-editable
             font=("Segoe UI", 11),
             width=43,
@@ -74,14 +63,8 @@ class RecipeGui(tk.Frame):
         self.cuisine_combobox.pack(pady=(0, 20), ipady=7)
 
     def __dietary_ui(self):
-        dietaries = [
-            "high-protein",
-            "non-vegan",
-            "low-calorie",
-            "vegan",
-            "gluten-free",
-            "low-carb",
-        ]
+        from data.constants import DIETARY_TAGS
+        
 
         tk.Label(
             self, text="Dietary preferences", bg="#f5f5f5", font=("Segoe UI", 12)
@@ -95,7 +78,7 @@ class RecipeGui(tk.Frame):
         self.diet_combobox = ttk.Combobox(
             self,
             textvariable=self.selected_diet,
-            values=dietaries,
+            values=DIETARY_TAGS,
             state="readonly",  # makes it non-editable
             font=("Segoe UI", 11),
             width=43,

@@ -1413,3 +1413,27 @@ RULES = [
         },
     },
 ]
+
+# Available Cuisines
+CUISINES = [
+    "American",
+    "Italian",
+    "French",
+    "Arabian",
+    "Chinese",
+    "Japanese",
+    "Mexican",
+    "Indian",
+    "Thai",
+    "Mediterranean",
+]
+
+# Available Diet Tags
+DIETARY_TAGS = [
+    "high-protein",
+    "non-vegan",
+    "low-calorie",
+    "vegan",
+    "gluten-free",
+    "low-carb",
+]

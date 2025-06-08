@@ -41,7 +41,9 @@ class InferenceEngine:
             ):
                 continue
 
-            if "diet_tag" in preferences and (preferences["diet_tag"] not in recipe['diet_tags']):
+            if "diet_tag" in preferences and (
+                preferences["diet_tag"] not in recipe["diet_tags"]
+            ):
                 continue
 
             scored_recipes.append(
@@ -51,3 +53,31 @@ class InferenceEngine:
         scored_recipes.sort(key=lambda x: x["score"], reverse=True)
 
         return scored_recipes
+
+    def infer_by_ingredients(self, ingredients):
+        # List to hold matched recipes with missing and excess ingredients
+        matched_recipes = []
+        
+        # Iterate through each recipe
+        for recipe in self.recipes:
+
+            input_ingredients = {ingredient.lower().strip() for ingredient in ingredients}
+            recipe_ingredients = {ingredient.lower().strip() for ingredient in recipe["ingredients"]}
+
+            # Check if all input ingredients are in the recipe (exact match)
+            if input_ingredients.issubset(recipe_ingredients):
+                # Excess ingredients (input ingredients not needed for the recipe)
+                excess_ingredients = list(input_ingredients - recipe_ingredients)
+
+                # Missing ingredients (recipe ingredients not provided in input)
+                missing_ingredients = list(recipe_ingredients - input_ingredients)
+
+                matched_recipes.append(
+                    {
+                        "recipe": recipe,
+                        "missing_ingredients": missing_ingredients,
+                        "excess_ingredients": excess_ingredients,
+                    }
+                )
+
+        return matched_recipes

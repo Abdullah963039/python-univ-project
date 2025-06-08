@@ -33,14 +33,6 @@
         "documentation": {}
     },
     {
-        "label": "MainMenuScreen",
-        "importPath": "gui.main_screen",
-        "description": "gui.main_screen",
-        "isExtraImport": true,
-        "detail": "gui.main_screen",
-        "documentation": {}
-    },
-    {
         "label": "List",
         "importPath": "typing",
         "description": "typing",
@@ -75,6 +67,24 @@
         "documentation": {}
     },
     {
+        "label": "CUISINES",
+        "kind": 5,
+        "importPath": "data.constants",
+        "description": "data.constants",
+        "peekOfCode": "CUISINES = [\n    \"American\",\n    \"Italian\",\n    \"French\",\n    \"Arabian\",\n    \"Chinese\",\n    \"Japanese\",\n    \"Mexican\",\n    \"Indian\",\n    \"Thai\",",
+        "detail": "data.constants",
+        "documentation": {}
+    },
+    {
+        "label": "DIETARY_TAGS",
+        "kind": 5,
+        "importPath": "data.constants",
+        "description": "data.constants",
+        "peekOfCode": "DIETARY_TAGS = [\n    \"high-protein\",\n    \"non-vegan\",\n    \"low-calorie\",\n    \"vegan\",\n    \"gluten-free\",\n    \"low-carb\",\n]",
+        "detail": "data.constants",
+        "documentation": {}
+    },
+    {
         "label": "InferenceEngine",
         "kind": 6,
         "importPath": "data.inference_engine",
@@ -97,7 +107,7 @@
         "kind": 6,
         "importPath": "gui.ingredients",
         "description": "gui.ingredients",
-        "peekOfCode": "class IngredientsGui(tk.Frame):\n    def __init__(self, parent: \"tk.Frame\", controller):\n        super().__init__(parent)\n        self.controller = controller\n        self.configure(bg=\"#f5f5f5\")\n        label = tk.Label(\n            self,\n            text=\"This is Screen Two\",\n            font=(\"Segoe UI\", 18, \"bold\"),\n            bg=\"#f5f5f5\",",
+        "peekOfCode": "class IngredientsGui(tk.Frame):\n    def __init__(self, parent: \"tk.Frame\", controller):\n        from data.recommender_system import RecipeRecommender\n        from data.constants import RECIPES, RULES\n        super().__init__(parent)\n        self.controller = controller\n        self.configure(bg=\"#f5f5f5\")\n        self.recommender = RecipeRecommender(RECIPES, RULES)\n        label = tk.Label(\n            self,",
         "detail": "gui.ingredients",
         "documentation": {}
     },

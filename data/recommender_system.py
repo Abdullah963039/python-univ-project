@@ -17,19 +17,15 @@ class RecipeRecommender:
             for result in results
         ]
 
-    def recommend_by_ingredients(self, available_ingredients, n=5):
-        preferences = {"available_ingredients": available_ingredients}
-        results = self.inference_engine.infer(preferences)
+    def recommend_by_ingredients(self, available_ingredients):
+
+        results = self.inference_engine.infer_by_ingredients(available_ingredients)
+
         return [
             {
                 "recipe": result["recipe"],
-                "match_percent": result["score"] * 20,
-                "missing_ingredients": [
-                    ing
-                    for ing in result["recipe"]["ingredients"]
-                    if ing not in available_ingredients
-                ],
-                "reasons": result["reasons"],
+                "missing_ingredients": result["missing_ingredients"],
+                "excess_ingredients": result["excess_ingredients"],
             }
-            for result in results[:n]
+            for result in results
         ]
