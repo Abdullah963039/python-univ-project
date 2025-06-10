@@ -33,7 +33,39 @@
         "documentation": {}
     },
     {
+        "label": "COOKING_TIME",
+        "importPath": "data.constants",
+        "description": "data.constants",
+        "isExtraImport": true,
+        "detail": "data.constants",
+        "documentation": {}
+    },
+    {
+        "label": "PROTIEN",
+        "importPath": "data.constants",
+        "description": "data.constants",
+        "isExtraImport": true,
+        "detail": "data.constants",
+        "documentation": {}
+    },
+    {
+        "label": "CALORIES",
+        "importPath": "data.constants",
+        "description": "data.constants",
+        "isExtraImport": true,
+        "detail": "data.constants",
+        "documentation": {}
+    },
+    {
         "label": "List",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Literal",
         "importPath": "typing",
         "description": "typing",
         "isExtraImport": true,
@@ -71,7 +103,7 @@
         "kind": 5,
         "importPath": "data.constants",
         "description": "data.constants",
-        "peekOfCode": "CUISINES = [\n    \"American\",\n    \"Italian\",\n    \"French\",\n    \"Arabian\",\n    \"Chinese\",\n    \"Japanese\",\n    \"Mexican\",\n    \"Indian\",\n    \"Thai\",",
+        "peekOfCode": "CUISINES = [\n    \"French\",\n    \"Asian\",\n    \"Indian\",\n    \"Mediterranean\",\n    \"Italian\",\n    \"American\",\n    \"Mexican\",\n    \"Middle eastern\",\n    \"Thai\",",
         "detail": "data.constants",
         "documentation": {}
     },
@@ -80,7 +112,34 @@
         "kind": 5,
         "importPath": "data.constants",
         "description": "data.constants",
-        "peekOfCode": "DIETARY_TAGS = [\n    \"high-protein\",\n    \"non-vegan\",\n    \"low-calorie\",\n    \"vegan\",\n    \"gluten-free\",\n    \"low-carb\",\n]",
+        "peekOfCode": "DIETARY_TAGS = [\n    \"high-protein\",\n    \"non-vegan\",\n    \"low-calorie\",\n    \"vegan\",\n    \"gluten-free\",\n    \"low-carb\",\n]\nCOOKING_TIME = (10, 120) # (Min, Max)\nPROTIEN = (5, 55)",
+        "detail": "data.constants",
+        "documentation": {}
+    },
+    {
+        "label": "COOKING_TIME",
+        "kind": 5,
+        "importPath": "data.constants",
+        "description": "data.constants",
+        "peekOfCode": "COOKING_TIME = (10, 120) # (Min, Max)\nPROTIEN = (5, 55)\nCALORIES = (150, 850)",
+        "detail": "data.constants",
+        "documentation": {}
+    },
+    {
+        "label": "PROTIEN",
+        "kind": 5,
+        "importPath": "data.constants",
+        "description": "data.constants",
+        "peekOfCode": "PROTIEN = (5, 55)\nCALORIES = (150, 850)",
+        "detail": "data.constants",
+        "documentation": {}
+    },
+    {
+        "label": "CALORIES",
+        "kind": 5,
+        "importPath": "data.constants",
+        "description": "data.constants",
+        "peekOfCode": "CALORIES = (150, 850)",
         "detail": "data.constants",
         "documentation": {}
     },
@@ -98,7 +157,7 @@
         "kind": 6,
         "importPath": "data.recommender_system",
         "description": "data.recommender_system",
-        "peekOfCode": "class RecipeRecommender:\n    def __init__(self, recipes, rules):\n        self.inference_engine = InferenceEngine(recipes, rules)\n    def recommend(self, preferences):\n        results = self.inference_engine.infer(preferences)\n        return [\n            {\n                \"recipe\": result[\"recipe\"],\n                \"match_percent\": result[\"score\"] * 20,\n                \"reasons\": result[\"reasons\"],",
+        "peekOfCode": "class RecipeRecommender:\n    def __init__(self, recipes, rules):\n        self.inference_engine = InferenceEngine(recipes, rules)\n    def recommend(self, preferences):\n        return self.inference_engine.infer(preferences)\n    def recommend_by_ingredients(self, available_ingredients):\n        results = self.inference_engine.infer_by_ingredients(available_ingredients)\n        return [\n            {\n                \"recipe\": result[\"recipe\"],",
         "detail": "data.recommender_system",
         "documentation": {}
     },
@@ -132,10 +191,19 @@
     {
         "label": "ResultsScreen",
         "kind": 6,
-        "importPath": "gui.results_screen",
-        "description": "gui.results_screen",
-        "peekOfCode": "class ResultsScreen(tk.Frame):\n    def __init__(self, parent: \"tk.Frame\", controller, recipes: List[dict] = []):\n        super().__init__(parent)\n        self.controller = controller\n        self.recipes = recipes\n        self.configure(bg=\"#f5f5f5\")\n        # Create a scrollable frame\n        self.scrollable_frame = ttk.Frame(self)\n        self.scrollable_frame.pack(fill=tk.BOTH, expand=True)\n        self.canvas = tk.Canvas(self.scrollable_frame)",
-        "detail": "gui.results_screen",
+        "importPath": "gui.results",
+        "description": "gui.results",
+        "peekOfCode": "class ResultsScreen(tk.Frame):\n    def __init__(\n        self,\n        parent: \"tk.Frame\",\n        controller,\n    ):\n        super().__init__(parent)\n        self.controller = controller\n        self.__results: List[dict] = []\n        self.__results_type: Literal[\"recipe\", \"ingredients\"] = \"recipe\"",
+        "detail": "gui.results",
+        "documentation": {}
+    },
+    {
+        "label": "test_ingre",
+        "kind": 5,
+        "importPath": "gui.results",
+        "description": "gui.results",
+        "peekOfCode": "test_ingre = [\n    {\n        \"recipe\": {\n            \"name\": \"Quiche Lorraine\",\n            \"ingredients\": [\n                \"pie crust\",\n                \"eggs\",\n                \"bacon\",\n                \"heavy cream\",\n                \"gruyere cheese\",",
+        "detail": "gui.results",
         "documentation": {}
     }
 ]

@@ -1,6 +1,8 @@
 import tkinter as tk
 from tkinter import ttk
 
+from data.constants import COOKING_TIME, PROTIEN, CALORIES
+
 
 class RecipeGui(tk.Frame):
     def __init__(self, parent: "tk.Frame", controller):
@@ -30,14 +32,20 @@ class RecipeGui(tk.Frame):
         self.__prefered_cuisines_ui()
 
         # Maximum cooking time
-        self.cook_time_entry = self.__create_input("Maximum cooking time in minutes:")
+        self.cook_time_entry = self.__create_input(
+            f"Maximum cooking time in minutes {[*COOKING_TIME]}:"
+        )
 
         # Dietary preferences
         self.__dietary_ui()
         # Minimum protein content
-        self.min_protein_entry = self.__create_input("Minimum protein content (grams):")
+        self.min_protein_entry = self.__create_input(
+            f"Minimum protein content ({[*PROTIEN]}grams):"
+        )
         # Maximum calories
-        self.max_calories_entry = self.__create_input("Maximum calories:")
+        self.max_calories_entry = self.__create_input(
+            f"Maximum calories {[*CALORIES]}:"
+        )
 
     def __prefered_cuisines_ui(self):
         from data.constants import CUISINES
@@ -64,7 +72,6 @@ class RecipeGui(tk.Frame):
 
     def __dietary_ui(self):
         from data.constants import DIETARY_TAGS
-        
 
         tk.Label(
             self, text="Dietary preferences", bg="#f5f5f5", font=("Segoe UI", 12)
@@ -99,9 +106,9 @@ class RecipeGui(tk.Frame):
         max_cooking_time = self.cook_time_entry.get()
         try:
             cooking_time = int(max_cooking_time)
-            if cooking_time <= 0 or cooking_time > (60 * 24):
+            if cooking_time < COOKING_TIME[0] or cooking_time > COOKING_TIME[1]:
                 warnings.append(
-                    "Cooking time must be between 1 and 1440 minutes (24 hours)"
+                    f"Cooking time must be between {COOKING_TIME[0]} and {COOKING_TIME[1]} minutes ({COOKING_TIME[1] // 60} hours)"
                 )
         except ValueError:
             warnings.append("Please enter a valid number for cooking time")
@@ -115,8 +122,10 @@ class RecipeGui(tk.Frame):
         min_protein_content = self.min_protein_entry.get()
         try:
             protein = int(min_protein_content)
-            if protein <= 0 or protein >= 500:
-                warnings.append("Protein content must be between 1 and 499 grams")
+            if protein < PROTIEN[0] or protein >= PROTIEN[1]:
+                warnings.append(
+                    f"Protein content must be between {PROTIEN[0]} and {PROTIEN[1]} grams"
+                )
         except ValueError:
             warnings.append("Please enter a valid number for protein content")
 
@@ -124,8 +133,10 @@ class RecipeGui(tk.Frame):
         max_calories = self.max_calories_entry.get()
         try:
             calories = int(max_calories)
-            if calories <= 1 or calories > 2000:
-                warnings.append("Calories must be between 1 and 2000")
+            if calories < CALORIES[0] or calories > CALORIES[1]:
+                warnings.append(
+                    f"Calories must be between {CALORIES[0]} and {CALORIES[1]}"
+                )
         except ValueError:
             warnings.append("Please enter a valid number for maximum calories")
 
@@ -235,6 +246,8 @@ class RecipeGui(tk.Frame):
         submit_button.pack(side=tk.LEFT, padx=(20, 0))  # Right margin between buttons
 
     def submit_form(self):
+        from gui.results import ResultsScreen
+
         """Handle form submission with validation"""
 
         if not self.__validate_form():
@@ -251,5 +264,7 @@ class RecipeGui(tk.Frame):
 
         recommender = self.recommender
         results = recommender.recommend(preferences)
+        results_instance = self.controller.frames[ResultsScreen]
 
-        print(f"{results = }")
+        self.controller.show_frame(ResultsScreen)
+        results_instance.set_results(results, "recipe")

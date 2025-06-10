@@ -13,15 +13,6 @@ class InferenceEngine:
                     # preferences["cuisine"] -> is Single value
                     continue  # Skip recipes not matching preferred cuisine
 
-            score = 1.0
-            reasons = []
-
-            for rule in self.rules:
-                if rule["condition"](preferences, recipe):
-                    result = rule["action"](preferences, recipe)
-                    score *= result["score_boost"]
-                    reasons.append(result["reason"])
-
             # Apply other basic filters
             if (
                 "max_cook_time" in preferences
@@ -46,23 +37,22 @@ class InferenceEngine:
             ):
                 continue
 
-            scored_recipes.append(
-                {"recipe": recipe, "score": score, "reasons": reasons}
-            )
-
-        scored_recipes.sort(key=lambda x: x["score"], reverse=True)
+            scored_recipes.append(recipe)
 
         return scored_recipes
 
     def infer_by_ingredients(self, ingredients):
         # List to hold matched recipes with missing and excess ingredients
         matched_recipes = []
-        
+
         # Iterate through each recipe
         for recipe in self.recipes:
-
-            input_ingredients = {ingredient.lower().strip() for ingredient in ingredients}
-            recipe_ingredients = {ingredient.lower().strip() for ingredient in recipe["ingredients"]}
+            input_ingredients = {
+                ingredient.lower().strip() for ingredient in ingredients
+            }
+            recipe_ingredients = {
+                ingredient.lower().strip() for ingredient in recipe["ingredients"]
+            }
 
             # Check if all input ingredients are in the recipe (exact match)
             if input_ingredients.issubset(recipe_ingredients):

@@ -7,7 +7,7 @@ class RecipeRecommendationApp:
         from gui.recipe import RecipeGui
         from gui.ingredients import IngredientsGui
         from gui.main_screen import MainMenuScreen
-        from gui.results_screen import ResultsScreen
+        from gui.results import ResultsScreen
 
         self.root = root
         self.init_app()
@@ -48,8 +48,8 @@ class RecipeRecommendationApp:
 
     def init_app(self):
         self.root.title("Recipe Recommendation")
-        self.root.geometry("800x700")
-        self.root.minsize(800, 700)
+        self.root.geometry("1000x800")
+        self.root.minsize(1000, 800)
         self.root.configure(bg="#f5f5f5")
 
         # Set a modern font for the app

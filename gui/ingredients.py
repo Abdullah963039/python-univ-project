@@ -81,9 +81,14 @@ class IngredientsGui(tk.Frame):
         description_label.pack(pady=(0, 0))
 
     def submit_form(self):
+        from gui.results import ResultsScreen
+
         inp_value = self.ingredients_entry.get()
         ingredients = [ing.lower().strip() for ing in inp_value.split(",")]
 
         results = self.recommender.recommend_by_ingredients(ingredients)
+        results_instance = self.controller.frames[ResultsScreen]
 
-        print(f"{results = }")
+        self.controller.show_frame(ResultsScreen)
+        results_instance.set_results(results, "ingredients")
+

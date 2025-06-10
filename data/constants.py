@@ -1416,16 +1416,23 @@ RULES = [
 
 # Available Cuisines
 CUISINES = [
-    "American",
-    "Italian",
     "French",
-    "Arabian",
+    "Asian",
+    "Indian",
+    "Mediterranean",
+    "Italian",
+    "American",
+    "Mexican",
+    "Middle eastern",
+    "Thai",
     "Chinese",
     "Japanese",
-    "Mexican",
-    "Indian",
-    "Thai",
-    "Mediterranean",
+    "Russian",
+    "British",
+    "Korean",
+    "Spanish",
+    "Vietnamese",
+    "Australian",
 ]
 
 # Available Diet Tags
@@ -1437,3 +1444,7 @@ DIETARY_TAGS = [
     "gluten-free",
     "low-carb",
 ]
+
+COOKING_TIME = (10, 120) # (Min, Max)
+PROTIEN = (5, 55)
+CALORIES = (150, 850)
