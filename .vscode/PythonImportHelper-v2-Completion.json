@@ -65,14 +65,6 @@
         "documentation": {}
     },
     {
-        "label": "Literal",
-        "importPath": "typing",
-        "description": "typing",
-        "isExtraImport": true,
-        "detail": "typing",
-        "documentation": {}
-    },
-    {
         "label": "RecipeRecommendationApp",
         "importPath": "gui",
         "description": "gui",
@@ -157,17 +149,8 @@
         "kind": 6,
         "importPath": "data.recommender_system",
         "description": "data.recommender_system",
-        "peekOfCode": "class RecipeRecommender:\n    def __init__(self, recipes, rules):\n        self.inference_engine = InferenceEngine(recipes, rules)\n    def recommend(self, preferences):\n        return self.inference_engine.infer(preferences)\n    def recommend_by_ingredients(self, available_ingredients):\n        results = self.inference_engine.infer_by_ingredients(available_ingredients)\n        return [\n            {\n                \"recipe\": result[\"recipe\"],",
+        "peekOfCode": "class RecipeRecommender:\n    def __init__(self, recipes, rules):\n        self.inference_engine = InferenceEngine(recipes, rules)\n    def recommend(self, preferences):\n        return self.inference_engine.infer(preferences)",
         "detail": "data.recommender_system",
-        "documentation": {}
-    },
-    {
-        "label": "IngredientsGui",
-        "kind": 6,
-        "importPath": "gui.ingredients",
-        "description": "gui.ingredients",
-        "peekOfCode": "class IngredientsGui(tk.Frame):\n    def __init__(self, parent: \"tk.Frame\", controller):\n        from data.recommender_system import RecipeRecommender\n        from data.constants import RECIPES, RULES\n        super().__init__(parent)\n        self.controller = controller\n        self.configure(bg=\"#f5f5f5\")\n        self.recommender = RecipeRecommender(RECIPES, RULES)\n        label = tk.Label(\n            self,",
-        "detail": "gui.ingredients",
         "documentation": {}
     },
     {
@@ -175,7 +158,7 @@
         "kind": 6,
         "importPath": "gui.main_screen",
         "description": "gui.main_screen",
-        "peekOfCode": "class MainMenuScreen(tk.Frame):\n    def __init__(self, parent: \"tk.Frame\", controller):\n        super().__init__(parent)\n        self.controller = controller\n        self.configure(bg=\"#f5f5f5\")\n        self.render_link_btns( controller)\n    def render_link_btns(self, controller):\n        from gui.recipe import RecipeGui\n        from gui.ingredients import IngredientsGui\n        button_frame = tk.Frame(self, bg=\"#f5f5f5\")",
+        "peekOfCode": "class MainMenuScreen(tk.Frame):\n    def __init__(self, parent: \"tk.Frame\", controller):\n        super().__init__(parent)\n        self.controller = controller\n        self.configure(bg=\"#f5f5f5\")\n        self.render_link_btns(controller)\n    def render_link_btns(self, controller):\n        from gui.recipe import RecipeGui\n        button_frame = tk.Frame(self, bg=\"#f5f5f5\")\n        button_frame.place(relx=0.5, rely=0.5, anchor=\"center\")",
         "detail": "gui.main_screen",
         "documentation": {}
     },
@@ -193,16 +176,7 @@
         "kind": 6,
         "importPath": "gui.results",
         "description": "gui.results",
-        "peekOfCode": "class ResultsScreen(tk.Frame):\n    def __init__(\n        self,\n        parent: \"tk.Frame\",\n        controller,\n    ):\n        super().__init__(parent)\n        self.controller = controller\n        self.__results: List[dict] = []\n        self.__results_type: Literal[\"recipe\", \"ingredients\"] = \"recipe\"",
-        "detail": "gui.results",
-        "documentation": {}
-    },
-    {
-        "label": "test_ingre",
-        "kind": 5,
-        "importPath": "gui.results",
-        "description": "gui.results",
-        "peekOfCode": "test_ingre = [\n    {\n        \"recipe\": {\n            \"name\": \"Quiche Lorraine\",\n            \"ingredients\": [\n                \"pie crust\",\n                \"eggs\",\n                \"bacon\",\n                \"heavy cream\",\n                \"gruyere cheese\",",
+        "peekOfCode": "class ResultsScreen(tk.Frame):\n    def __init__(\n        self,\n        parent: \"tk.Frame\",\n        controller,\n    ):\n        super().__init__(parent)\n        self.controller = controller\n        self.__results: List[dict] = []\n        self.configure(bg=\"#f5f5f5\")",
         "detail": "gui.results",
         "documentation": {}
     }

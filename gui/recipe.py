@@ -244,4 +244,4 @@ class RecipeGui(tk.Frame):
         results_instance = self.controller.frames[ResultsScreen]
 
         self.controller.show_frame(ResultsScreen)
-        results_instance.set_results(results, "recipe")
+        results_instance.set_results(results)

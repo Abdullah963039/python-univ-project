@@ -5,7 +5,6 @@ from tkinter import font
 class RecipeRecommendationApp:
     def __init__(self, root: "tk.Tk"):
         from gui.recipe import RecipeGui
-        from gui.ingredients import IngredientsGui
         from gui.main_screen import MainMenuScreen
         from gui.results import ResultsScreen
 
@@ -20,7 +19,7 @@ class RecipeRecommendationApp:
         self.container.grid_columnconfigure(0, weight=1)
 
         self.frames = {}
-        for F in (MainMenuScreen, RecipeGui, IngredientsGui, ResultsScreen):
+        for F in (MainMenuScreen, RecipeGui, ResultsScreen):
             frame = F(parent=self.container, controller=self)
             self.frames[F] = frame
             frame.grid(row=0, column=0, sticky="nsew")
