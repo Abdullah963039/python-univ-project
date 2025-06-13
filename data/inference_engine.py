@@ -7,13 +7,10 @@ class InferenceEngine:
         scored_recipes = []
 
         for recipe in self.recipes:
-            # Strict cuisine filter first
             if "cuisine" in preferences:
                 if recipe["cuisine"] != preferences["cuisine"]:
-                    # preferences["cuisine"] -> is Single value
-                    continue  # Skip recipes not matching preferred cuisine
+                    continue
 
-            # Apply other basic filters
             if (
                 "max_cook_time" in preferences
                 and recipe["cook_time"] > preferences["max_cook_time"]
@@ -41,26 +38,41 @@ class InferenceEngine:
 
         return scored_recipes
 
-    def infer_by_ingredients(self, ingredients):
-        # List to hold matched recipes with missing and excess ingredients
+    def infer_by_ingredients(self, inp_ingredients):
         matched_recipes = []
 
-        # Iterate through each recipe
+        input_ingredients = {
+            ingredient.lower().strip() for ingredient in inp_ingredients
+        }
+
         for recipe in self.recipes:
-            input_ingredients = {
-                ingredient.lower().strip() for ingredient in ingredients
-            }
             recipe_ingredients = {
                 ingredient.lower().strip() for ingredient in recipe["ingredients"]
             }
 
-            # Check if all input ingredients are in the recipe (exact match)
-            if input_ingredients.issubset(recipe_ingredients):
-                # Excess ingredients (input ingredients not needed for the recipe)
-                excess_ingredients = list(input_ingredients - recipe_ingredients)
+            if all(
+                any(
+                    inp in recipe_ingredient for recipe_ingredient in recipe_ingredients
+                )
+                for inp in input_ingredients
+            ):
+                excess_ingredients = [
+                    ingredient
+                    for ingredient in input_ingredients
+                    if not any(
+                        ingredient in recipe_ingredient
+                        for recipe_ingredient in recipe_ingredients
+                    )
+                ]
 
-                # Missing ingredients (recipe ingredients not provided in input)
-                missing_ingredients = list(recipe_ingredients - input_ingredients)
+                missing_ingredients = [
+                    recipe_ingredient
+                    for recipe_ingredient in recipe_ingredients
+                    if not any(
+                        recipe_ingredient in ingredient
+                        for ingredient in input_ingredients
+                    )
+                ]
 
                 matched_recipes.append(
                     {

@@ -12,17 +12,13 @@ class RecipeRecommendationApp:
         self.root = root
         self.init_app()
 
-        # Add a welcome label
         self.show_welcome_message()
 
-        # Container for all frames
-        self.container = tk.Frame(self.root, bg="#c2c2c2")  # TODO reset background
+        self.container = tk.Frame(self.root, bg="#f5f5f5")
         self.container.pack(fill="both", expand=True)
-        # Configure grid weight to make container expandable
         self.container.grid_rowconfigure(0, weight=1)
         self.container.grid_columnconfigure(0, weight=1)
 
-        # Initialize frames dict
         self.frames = {}
         for F in (MainMenuScreen, RecipeGui, IngredientsGui, ResultsScreen):
             frame = F(parent=self.container, controller=self)
@@ -52,6 +48,5 @@ class RecipeRecommendationApp:
         self.root.minsize(1000, 800)
         self.root.configure(bg="#f5f5f5")
 
-        # Set a modern font for the app
         self.default_font = font.nametofont("TkDefaultFont")
         self.default_font.configure(family="Segoe UI", size=12)

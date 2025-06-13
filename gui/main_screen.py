@@ -14,7 +14,6 @@ class MainMenuScreen(tk.Frame):
         from gui.recipe import RecipeGui
         from gui.ingredients import IngredientsGui
         
-        # Centered frame for buttons
         button_frame = tk.Frame(self, bg="#f5f5f5")
         button_frame.place(relx=0.5, rely=0.5, anchor="center")
 

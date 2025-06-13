@@ -1893,7 +1893,7 @@ RULES = [
     {
         "name": "ingredient_overlap_rule",
         "condition": lambda pref, recipe: "available_ingredients" in pref,
-        "action": lambda pref, recipe: {  # Now takes both pref and recipe
+        "action": lambda pref, recipe: {  
             "reason": "Uses available ingredients",
             "score_boost": len(
                 [

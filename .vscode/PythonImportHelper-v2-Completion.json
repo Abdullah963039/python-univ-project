@@ -94,7 +94,7 @@
         "kind": 5,
         "importPath": "data.constants",
         "description": "data.constants",
-        "peekOfCode": "RULES = [\n    {\n        \"name\": \"ingredient_overlap_rule\",\n        \"condition\": lambda pref, recipe: \"available_ingredients\" in pref,\n        \"action\": lambda pref, recipe: {  # Now takes both pref and recipe\n            \"reason\": \"Uses available ingredients\",\n            \"score_boost\": len(\n                [\n                    ing\n                    for ing in recipe[\"ingredients\"]",
+        "peekOfCode": "RULES = [\n    {\n        \"name\": \"ingredient_overlap_rule\",\n        \"condition\": lambda pref, recipe: \"available_ingredients\" in pref,\n        \"action\": lambda pref, recipe: {  \n            \"reason\": \"Uses available ingredients\",\n            \"score_boost\": len(\n                [\n                    ing\n                    for ing in recipe[\"ingredients\"]",
         "detail": "data.constants",
         "documentation": {}
     },
@@ -148,7 +148,7 @@
         "kind": 6,
         "importPath": "data.inference_engine",
         "description": "data.inference_engine",
-        "peekOfCode": "class InferenceEngine:\n    def __init__(self, recipes, rules):\n        self.recipes = recipes\n        self.rules = rules\n    def infer(self, preferences):\n        scored_recipes = []\n        for recipe in self.recipes:\n            # Strict cuisine filter first\n            if \"cuisine\" in preferences:\n                if recipe[\"cuisine\"] != preferences[\"cuisine\"]:",
+        "peekOfCode": "class InferenceEngine:\n    def __init__(self, recipes, rules):\n        self.recipes = recipes\n        self.rules = rules\n    def infer(self, preferences):\n        scored_recipes = []\n        for recipe in self.recipes:\n            if \"cuisine\" in preferences:\n                if recipe[\"cuisine\"] != preferences[\"cuisine\"]:\n                    continue",
         "detail": "data.inference_engine",
         "documentation": {}
     },
@@ -175,7 +175,7 @@
         "kind": 6,
         "importPath": "gui.main_screen",
         "description": "gui.main_screen",
-        "peekOfCode": "class MainMenuScreen(tk.Frame):\n    def __init__(self, parent: \"tk.Frame\", controller):\n        super().__init__(parent)\n        self.controller = controller\n        self.configure(bg=\"#f5f5f5\")\n        self.render_link_btns( controller)\n    def render_link_btns(self, controller):\n        from gui.recipe import RecipeGui\n        from gui.ingredients import IngredientsGui\n        # Centered frame for buttons",
+        "peekOfCode": "class MainMenuScreen(tk.Frame):\n    def __init__(self, parent: \"tk.Frame\", controller):\n        super().__init__(parent)\n        self.controller = controller\n        self.configure(bg=\"#f5f5f5\")\n        self.render_link_btns( controller)\n    def render_link_btns(self, controller):\n        from gui.recipe import RecipeGui\n        from gui.ingredients import IngredientsGui\n        button_frame = tk.Frame(self, bg=\"#f5f5f5\")",
         "detail": "gui.main_screen",
         "documentation": {}
     },
@@ -184,7 +184,7 @@
         "kind": 6,
         "importPath": "gui.recipe",
         "description": "gui.recipe",
-        "peekOfCode": "class RecipeGui(tk.Frame):\n    def __init__(self, parent: \"tk.Frame\", controller):\n        from data.recommender_system import RecipeRecommender\n        from data.constants import RECIPES, RULES\n        super().__init__(parent)\n        self.controller = controller\n        self.configure(bg=\"#f5f5f5\")\n        self.recommender = RecipeRecommender(RECIPES, RULES)\n        # Title label\n        label = tk.Label(",
+        "peekOfCode": "class RecipeGui(tk.Frame):\n    def __init__(self, parent: \"tk.Frame\", controller):\n        from data.recommender_system import RecipeRecommender\n        from data.constants import RECIPES, RULES\n        super().__init__(parent)\n        self.controller = controller\n        self.configure(bg=\"#f5f5f5\")\n        self.recommender = RecipeRecommender(RECIPES, RULES)\n        label = tk.Label(\n            self,",
         "detail": "gui.recipe",
         "documentation": {}
     },

@@ -203,7 +203,6 @@ class ResultsScreen(tk.Frame):
         self.__results_type: Literal["recipe", "ingredients"] = "recipe"
         self.configure(bg="#f5f5f5")
 
-        # Header section
         header_frame = tk.Frame(self, bg="#f5f5f5")
         header_frame.pack(fill=tk.X, pady=(10, 20), padx=20)
 
@@ -215,7 +214,6 @@ class ResultsScreen(tk.Frame):
             fg="#333333",
         ).pack(side=tk.LEFT)
 
-        # Back button
         from gui.main_screen import MainMenuScreen
 
         back_button = tk.Button(
@@ -234,36 +232,29 @@ class ResultsScreen(tk.Frame):
         )
         back_button.pack(side=tk.RIGHT)
 
-        # Main content area with scrollbar
         self.main_frame = tk.Frame(self, bg="#f5f5f5")
         self.main_frame.pack(fill=tk.BOTH, expand=True)
 
-        # Create canvas and scrollbar
         self.canvas = tk.Canvas(self.main_frame, bg="#f5f5f5", highlightthickness=0)
         self.scrollbar = ttk.Scrollbar(
             self.main_frame, orient="vertical", command=self.canvas.yview
         )
 
-        # Configure the canvas
         self.canvas.configure(yscrollcommand=self.scrollbar.set)
         self.canvas.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
         self.scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
 
-        # Create scrollable frame INSIDE the canvas
         self.scrollable_frame = tk.Frame(self.canvas, bg="#f5f5f5")
         self.canvas.create_window((0, 0), window=self.scrollable_frame, anchor="nw")
 
-        # Bind the configure event to update scrollregion
         self.scrollable_frame.bind(
             "<Configure>",
             lambda e: self.canvas.configure(scrollregion=self.canvas.bbox("all")),
         )
 
-        # Bind mouse wheel scrolling
         self.canvas.bind("<Configure>", lambda e: self._update_scrollregion())
         self.canvas.bind_all("<MouseWheel>", self._on_mousewheel)
 
-        # Initialize empty state label (but don't pack it yet)
         self.empty_label = tk.Label(
             self.scrollable_frame,
             text="No results to display",
@@ -276,20 +267,16 @@ class ResultsScreen(tk.Frame):
         self.canvas.yview_scroll(int(-1 * (event.delta / 120)), "units")
 
     def _update_scrollregion(self):
-        """Update the scroll region to encompass the scrollable frame"""
         self.canvas.configure(scrollregion=self.canvas.bbox("all"))
 
     def display_recipes(self):
-        # Clear previous content
         for widget in self.scrollable_frame.winfo_children():
             widget.destroy()
 
         if not self.__results:
-            # Show empty state if no results
             self.empty_label.pack(pady=50)
             return
 
-        # Hide empty state label since we have results
         self.empty_label.pack_forget()
 
         if self.__results_type == "recipe":
@@ -297,11 +284,9 @@ class ResultsScreen(tk.Frame):
         else:
             self.__display_by_ingredients_results()
 
-        # Update the scroll region after adding new content
         self._update_scrollregion()
 
     def __display_by_recipe_results(self):
-        # Use a single frame to hold the cards and center it
         inner_frame = tk.Frame(self.scrollable_frame, bg="#f5f5f5")
         inner_frame.pack(pady=20, fill="x")
 
@@ -312,7 +297,6 @@ class ResultsScreen(tk.Frame):
         screen_width = self.winfo_screenwidth()
         card_width = int(screen_width * 0.8)
 
-        # Card container
         card = tk.Frame(
             parent,
             bg="white",
@@ -325,9 +309,8 @@ class ResultsScreen(tk.Frame):
         )
         card.pack(side=tk.TOP, fill=tk.X, padx=(screen_width * 0.1), pady=10)
         card.pack_propagate(False)
-        card.configure(width=card_width, height=250)  # Fixed card size
+        card.configure(width=card_width, height=250)
 
-        # Recipe name
         name_label = tk.Label(
             card,
             text=recipe["name"],
@@ -339,29 +322,23 @@ class ResultsScreen(tk.Frame):
         )
         name_label.pack(fill=tk.X, pady=(0, 5))
 
-        # Details frame
         details_frame = tk.Frame(card, bg="white")
         details_frame.pack(fill=tk.X, pady=5)
 
-        # Cuisine
         self.__create_detail_row(
             details_frame, "Cuisine:", recipe["cuisine"].capitalize()
         )
 
-        # Cook time
         self.__create_detail_row(
             details_frame, "Cook Time:", f"{recipe['cook_time']} min"
         )
 
-        # Diet tags
         self.__create_detail_row(details_frame, "Diet:", ", ".join(recipe["diet_tags"]))
 
-        # Ingredients tags
         self.__create_detail_row(
             details_frame, "Ingredients:", ", ".join(recipe["ingredients"])
         )
 
-        # Nutrition if available
         if "nutrition" in recipe:
             self.__create_detail_row(
                 details_frame, "Protien:", f"{recipe['nutrition']['protein']}g"
@@ -371,7 +348,6 @@ class ResultsScreen(tk.Frame):
             )
 
     def __display_by_ingredients_results(self):
-        # Similar to recipe display but for ingredients-based results
         rows = []
         current_row = None
 
@@ -389,7 +365,6 @@ class ResultsScreen(tk.Frame):
 
         recipe = result["recipe"]
 
-        # Card container
         card = tk.Frame(
             parent,
             bg="white",
@@ -402,9 +377,8 @@ class ResultsScreen(tk.Frame):
         )
         card.pack(side=tk.TOP, fill=tk.X, padx=(screen_width * 0.1), pady=10)
         card.pack_propagate(False)
-        card.configure(width=card_width, height=280)  # Fixed card size
+        card.configure(width=card_width, height=280)
 
-        # Recipe name
         name_label = tk.Label(
             card,
             text=recipe["name"],
@@ -416,21 +390,17 @@ class ResultsScreen(tk.Frame):
         )
         name_label.pack(fill=tk.X, pady=(0, 5))
 
-        # Details frame
         details_frame = tk.Frame(card, bg="white")
         details_frame.pack(fill=tk.X, pady=5)
 
-        # Cuisine
         self.__create_detail_row(
             details_frame, "Cuisine:", recipe["cuisine"].capitalize()
         )
 
-        # Cook time
         self.__create_detail_row(
             details_frame, "Cook Time:", f"{recipe['cook_time']} min"
         )
 
-        # Diet tags
         self.__create_detail_row(details_frame, "Diet:", ", ".join(recipe["diet_tags"]))
 
         if len(result["missing_ingredients"]) > 0:
@@ -450,12 +420,10 @@ class ResultsScreen(tk.Frame):
             len(result["missing_ingredients"]) == 0
             and len(result["excess_ingredients"]) == 0
         ):
-            # Ingredients tags
             self.__create_detail_row(
                 details_frame, "Ingredients:", ", ".join(recipe["ingredients"])
             )
 
-        # Nutrition if available
         if "nutrition" in recipe:
             self.__create_detail_row(
                 details_frame, "Protien:", f"{recipe['nutrition']['protein']}g"

@@ -14,7 +14,6 @@ class RecipeGui(tk.Frame):
         self.configure(bg="#f5f5f5")
         self.recommender = RecipeRecommender(RECIPES, RULES)
 
-        # Title label
         label = tk.Label(
             self,
             text="Recipe Recommendation Form",
@@ -31,18 +30,15 @@ class RecipeGui(tk.Frame):
     def init_form(self):
         self.__prefered_cuisines_ui()
 
-        # Maximum cooking time
         self.cook_time_entry = self.__create_input(
             f"Maximum cooking time in minutes {[*COOKING_TIME]}:"
         )
 
-        # Dietary preferences
         self.__dietary_ui()
-        # Minimum protein content
+
         self.min_protein_entry = self.__create_input(
             f"Minimum protein content ({[*PROTIEN]}grams):"
         )
-        # Maximum calories
         self.max_calories_entry = self.__create_input(
             f"Maximum calories {[*CALORIES]}:"
         )
@@ -54,16 +50,14 @@ class RecipeGui(tk.Frame):
             self, text="Preferred Cuisine:", bg="#f5f5f5", font=("Segoe UI", 12)
         ).pack(pady=(10, 0))
 
-        # Create a StringVar to store the selected cuisine
         self.selected_cuisine = tk.StringVar()
-        self.selected_cuisine.set("Select a cuisine")  # default value
+        self.selected_cuisine.set("Select a cuisine")
 
-        # Create the combobox
         self.cuisine_combobox = ttk.Combobox(
             self,
             textvariable=self.selected_cuisine,
             values=CUISINES,
-            state="readonly",  # makes it non-editable
+            state="readonly",
             font=("Segoe UI", 11),
             width=43,
             justify="center",
@@ -77,16 +71,14 @@ class RecipeGui(tk.Frame):
             self, text="Dietary preferences", bg="#f5f5f5", font=("Segoe UI", 12)
         ).pack(pady=(10, 0))
 
-        # Create a StringVar to store the selected cuisine
         self.selected_diet = tk.StringVar()
         self.selected_diet.set("Select a dietary")
 
-        # Create the combobox
         self.diet_combobox = ttk.Combobox(
             self,
             textvariable=self.selected_diet,
             values=DIETARY_TAGS,
-            state="readonly",  # makes it non-editable
+            state="readonly",
             font=("Segoe UI", 11),
             width=43,
             justify="center",
@@ -94,15 +86,12 @@ class RecipeGui(tk.Frame):
         self.diet_combobox.pack(pady=(0, 20), ipady=7)
 
     def __validate_form(self):
-        """Validate form inputs and show warning messages for invalid entries"""
         warnings = []
 
-        # Validate cuisine selection
         selected_cuisine = self.selected_cuisine.get()
         if selected_cuisine == "Select a cuisine" or not selected_cuisine:
             warnings.append("Please select a preferred cuisine")
 
-        # Validate cooking time
         max_cooking_time = self.cook_time_entry.get()
         try:
             cooking_time = int(max_cooking_time)
@@ -113,12 +102,10 @@ class RecipeGui(tk.Frame):
         except ValueError:
             warnings.append("Please enter a valid number for cooking time")
 
-        # Validate dietary preferences
         dietary_preferences = self.selected_diet.get()
         if not dietary_preferences.strip():
             warnings.append("Please enter at least one dietary preference")
 
-        # Validate protein content
         min_protein_content = self.min_protein_entry.get()
         try:
             protein = int(min_protein_content)
@@ -129,7 +116,6 @@ class RecipeGui(tk.Frame):
         except ValueError:
             warnings.append("Please enter a valid number for protein content")
 
-        # Validate calories
         max_calories = self.max_calories_entry.get()
         try:
             calories = int(max_calories)
@@ -140,7 +126,6 @@ class RecipeGui(tk.Frame):
         except ValueError:
             warnings.append("Please enter a valid number for maximum calories")
 
-        # Show warnings if any exist
         if warnings:
             self.__show_warnings(warnings)
             return False
@@ -154,13 +139,11 @@ class RecipeGui(tk.Frame):
         warning_window.resizable(False, False)
         warning_window.configure(bg="#f5f5f5")
 
-        # Warning icon
         warning_icon = tk.Label(
             warning_window, text="⚠️", font=("Segoe UI", 24), bg="#f5f5f5"
         )
         warning_icon.pack(pady=(10, 5))
 
-        # Title
         title = tk.Label(
             warning_window,
             text="Please fix the following issues:",
@@ -170,7 +153,6 @@ class RecipeGui(tk.Frame):
         )
         title.pack(pady=(0, 10))
 
-        # Warning messages
         for warning in warnings:
             message = tk.Label(
                 warning_window,
@@ -183,7 +165,6 @@ class RecipeGui(tk.Frame):
             )
             message.pack(fill="x", padx=20, pady=2)
 
-        # OK button
         ok_button = tk.Button(
             warning_window,
             text="OK",
@@ -211,7 +192,6 @@ class RecipeGui(tk.Frame):
         button_frame = tk.Frame(self, bg="#f5f5f5")
         button_frame.pack(pady=(20, 30))
 
-        # Back button
         back_button = tk.Button(
             button_frame,
             text="Back",
@@ -227,7 +207,6 @@ class RecipeGui(tk.Frame):
         )
         back_button.pack(side=tk.LEFT)
 
-        # Submit button
         submit_button = tk.Button(
             button_frame,
             text="Submit",
@@ -238,22 +217,20 @@ class RecipeGui(tk.Frame):
             activeforeground="white",
             activebackground="#2980b9",
             padx=15,
-            pady=8,  # Increased padding for better proportions
+            pady=8,
             relief=tk.FLAT,
             borderwidth=0,
             cursor="hand2",
         )
-        submit_button.pack(side=tk.LEFT, padx=(20, 0))  # Right margin between buttons
+        submit_button.pack(side=tk.LEFT, padx=(20, 0))
 
     def submit_form(self):
         from gui.results import ResultsScreen
 
-        """Handle form submission with validation"""
 
         if not self.__validate_form():
-            return  # Don't proceed if validation fails
+            return 
 
-        # Retrieve valid user input
         preferences = {
             "cuisine": self.selected_cuisine.get().lower().strip(),
             "diet_tag": self.selected_diet.get().lower().strip(),

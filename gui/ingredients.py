@@ -30,7 +30,6 @@ class IngredientsGui(tk.Frame):
         button_frame = tk.Frame(self, bg="#f5f5f5")
         button_frame.pack(pady=(20, 30))
 
-        # Back button
         back_button = tk.Button(
             button_frame,
             text="Back",
@@ -46,7 +45,6 @@ class IngredientsGui(tk.Frame):
         )
         back_button.pack(side=tk.LEFT)
 
-        # Submit button
         submit_button = tk.Button(
             button_frame,
             text="Submit",
@@ -57,12 +55,12 @@ class IngredientsGui(tk.Frame):
             activeforeground="white",
             activebackground="#2980b9",
             padx=15,
-            pady=8,  # Increased padding for better proportions
+            pady=8,
             relief=tk.FLAT,
             borderwidth=0,
             cursor="hand2",
         )
-        submit_button.pack(side=tk.LEFT, padx=(20, 0))  # Right margin between buttons
+        submit_button.pack(side=tk.LEFT, padx=(20, 0))
 
     def __render_ingredients_input(self):
         input_label = tk.Label(self, text="Enter ingredients you have: ", bg="#f5f5f5")
@@ -91,4 +89,3 @@ class IngredientsGui(tk.Frame):
 
         self.controller.show_frame(ResultsScreen)
         results_instance.set_results(results, "ingredients")
-
