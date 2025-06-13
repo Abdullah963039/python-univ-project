@@ -85,7 +85,7 @@
         "kind": 5,
         "importPath": "data.constants",
         "description": "data.constants",
-        "peekOfCode": "RECIPES = [\n    {\n        \"name\": \"Quiche Lorraine\",\n        \"ingredients\": [\"pie crust\", \"eggs\", \"bacon\", \"heavy cream\", \"gruyere cheese\"],\n        \"cuisine\": \"french\",\n        \"diet_tags\": [\"high-protein\", \"non-vegan\"],\n        \"cook_time\": 50,\n        \"nutrition\": {\"calories\": 680, \"protein\": 25},\n    },\n    {",
+        "peekOfCode": "RECIPES = [\n    {\n        \"name\": \"Quiche Lorraine\",\n        \"ingredients\": [\"pie crust\", \"eggs\", \"bacon\", \"heavy cream\", \"gruyere cheese\"],\n        \"cuisine\": \"french\",\n        \"diet_tags\": [\"non-vegan\"],\n        \"cook_time\": 50,\n        \"nutrition\": {\"calories\": 680, \"protein\": 25},\n    },\n    {",
         "detail": "data.constants",
         "documentation": {}
     },
@@ -103,7 +103,7 @@
         "kind": 5,
         "importPath": "data.constants",
         "description": "data.constants",
-        "peekOfCode": "CUISINES = [\n    \"French\",\n    \"Asian\",\n    \"Indian\",\n    \"Mediterranean\",\n    \"Italian\",\n    \"American\",\n    \"Mexican\",\n    \"Middle eastern\",\n    \"Thai\",",
+        "peekOfCode": "CUISINES = [\n    \"French\",\n    \"Indian\",\n    \"Mediterranean\",\n    \"Italian\",\n    \"American\",\n    \"Mexican\",\n    \"Middle eastern\",\n    \"Chinese\",\n    \"Japanese\",",
         "detail": "data.constants",
         "documentation": {}
     },
@@ -112,7 +112,7 @@
         "kind": 5,
         "importPath": "data.constants",
         "description": "data.constants",
-        "peekOfCode": "DIETARY_TAGS = [\n    \"high-protein\",\n    \"non-vegan\",\n    \"low-calorie\",\n    \"vegan\",\n    \"gluten-free\",\n    \"low-carb\",\n]\nCOOKING_TIME = (10, 120) # (Min, Max)\nPROTIEN = (5, 55)",
+        "peekOfCode": "DIETARY_TAGS = [\"non-vegan\", \"vegan\", \"vegetarian\"]\nCOOKING_TIME = (10, 120)  # (Min, Max)\nPROTIEN = (2, 55)\nCALORIES = (150, 850)",
         "detail": "data.constants",
         "documentation": {}
     },
@@ -121,7 +121,7 @@
         "kind": 5,
         "importPath": "data.constants",
         "description": "data.constants",
-        "peekOfCode": "COOKING_TIME = (10, 120) # (Min, Max)\nPROTIEN = (5, 55)\nCALORIES = (150, 850)",
+        "peekOfCode": "COOKING_TIME = (10, 120)  # (Min, Max)\nPROTIEN = (2, 55)\nCALORIES = (150, 850)",
         "detail": "data.constants",
         "documentation": {}
     },
@@ -130,7 +130,7 @@
         "kind": 5,
         "importPath": "data.constants",
         "description": "data.constants",
-        "peekOfCode": "PROTIEN = (5, 55)\nCALORIES = (150, 850)",
+        "peekOfCode": "PROTIEN = (2, 55)\nCALORIES = (150, 850)",
         "detail": "data.constants",
         "documentation": {}
     },
